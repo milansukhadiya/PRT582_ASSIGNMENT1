@@ -1,21 +1,27 @@
+# importing module
 from random import randint
+# taking case insensitive choices as input
 choice = ['rock','paper','scissor']
 ch = 'y'
 rounds = 0
 
+# player choice function
 def player_choice():
     plr_ch = input("\nPlease input complete word.\n\nEnter your choice Rock / Paper / Scissor: ")
 
+    # player can input other char so check to ensure that cannot be broken
     if plr_ch.lower() and plr_ch.lower() in ('rock','paper','scissor'):
         return plr_ch.lower()
     else:
         print("\nWrong Input... Please Retry...")
         player_choice()
-
+        
+# function with parameter to get result on every choice
 def get_result(plr_ch):
     comp_choice = choice[randint(0,2)]
     print("\nComputer chose:",comp_choice,"\n")
 
+     # basic game rules
     if plr_ch == comp_choice:
         result = "tie"
         print('{} is same as {}! No score change!'.format(plr_ch.upper(), comp_choice.upper()))
@@ -28,11 +34,15 @@ def get_result(plr_ch):
     elif comp_choice == 'rock' and plr_ch == 'paper': 
         result = 'win'
         print('PAPER Wins! Score +1')
+        
+    # if it does not match any of the win criteria then add 1 to loss and
+    # display loss message
     else: 
         result = 'lose'
         print('You lose! Score -1')
     return result
 
+# function to update the scores
 def update_score(result):
     global wins, loss, tie
     if result == 'win':
@@ -42,6 +52,7 @@ def update_score(result):
     else:
         tie += 1
 
+# function to run the game till user defined rounds
 def game(rounds):
     tot_score = 0
     global round_result
@@ -56,6 +67,7 @@ def game(rounds):
 
     return tot_score
 
+# to take the number of rounds from user as input
 def game_rounds(r = 0):
     r = input("\nEnter the number of rounds you want to play: ")
 
@@ -65,7 +77,8 @@ def game_rounds(r = 0):
     except:
         print("\nWrong Input! Enter a number!")
         game_rounds()
-
+        
+# Main program
 def main():
     global ch, round_result
     print("\nWelcome to Rock, Paper, Scissor Game.")
@@ -80,7 +93,8 @@ def main():
 
     game_rounds()
     ts = game(rounds)
-
+    
+    # displaying results after all  rounds
     print("\nAfter",rounds,"rounds, your final score is: ",ts)
     print("\nYou have {} wins, {} ties and {} losses!".format(wins,tie,loss))
     print("\nRound wise result is",round_result)
